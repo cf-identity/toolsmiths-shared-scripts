@@ -89,6 +89,12 @@ ops_manager:
     ssh_elb_dns_name: {{pcf_elb_ssh_dns_name}}
     tcp_elb_name: # tcp elb is introduced in 1.8
     tcp_elb_dns_name: # tcp elb is introduced in 1.8
+    system_database:
+      external:
+        host:
+        port:
+        username:
+        password:
     file_storage:
       endpoint: {{aws_s3_endpoint}}
       bucket: {{ ert_s3_buildpacks_bucket_name }}
