@@ -563,7 +563,7 @@ jobs:
         AWS_DEFAULT_REGION: *aws_region
         AWS_ACCESS_KEY_ID: *aws_access_key_id
         AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
-    - task: delete-certificate
+    - task: delete-s3-buckets
       attempts: *retry
       privileged: true
       config:
@@ -573,12 +573,29 @@ jobs:
         - name: environment-ymls
         run:
           path: /bin/bash
-          args: ['-c', "export ARN=$(aws acm list-certificates --output text | grep ${AWS_SYSTEM_DOMAIN} | awk '{print $2}') && echo \"Deleting certificates: ${AWS_ENVIRONMENT_NAME} ...\" && aws acm delete-certificate --certificate-arn ${ARN}"]
+          args: ['-c', 'echo "Deleting s3-buckets: ${AWS_ENVIRONMENT_NAME} ..." && for i in $(aws s3 ls | grep "${AWS_ENVIRONMENT_NAME}-*" | awk "{print $3}"); do aws s3 rb s3://$i --force; done;']
       params:
         ENV_FOLDER: *environment_yml_folder
         AWS_ENVIRONMENT_NAME: *aws_environment_name
         AWS_DEFAULT_REGION: *aws_region
         AWS_ACCESS_KEY_ID: *aws_access_key_id
         AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
+#    - task: delete-certificate
+#      attempts: *retry
+#      privileged: true
+#      config:
+#        platform: linux
+#        image: docker:///cftoolsmiths/aws_tools
+#        inputs:
+#        - name: environment-ymls
+#        run:
+#          path: /bin/bash
+#          args: ['-c', "export ARN=$(aws acm list-certificates --output text | grep ${AWS_SYSTEM_DOMAIN} | awk '{print $2}') && echo \"Deleting certificates: ${AWS_ENVIRONMENT_NAME} ...\" && aws acm delete-certificate --certificate-arn ${ARN}"]
+#      params:
+#        ENV_FOLDER: *environment_yml_folder
+#        AWS_ENVIRONMENT_NAME: *aws_environment_name
+#        AWS_DEFAULT_REGION: *aws_region
+#        AWS_ACCESS_KEY_ID: *aws_access_key_id
+#        AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
     - put: environment-ymls
       params: {repository: environment-ymls}
