@@ -195,4 +195,4 @@ unless result
   exit 1
 end
 
-cmds.each { |cmd| attempt cmd }
+cmds.each { |cmd| attempt cmd unless cmd.nil?}
