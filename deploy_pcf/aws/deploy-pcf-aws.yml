@@ -28,7 +28,7 @@ aws_rds_password: &aws_rds_password {{rds-password}}
 aws_public_key: &aws_public_key {{aws-public-key}}
 aws_private_key_file_name: &aws_private_key_file_name {{aws-private-key-file-name}} # this key is expected to be inside your environment folder inside the git repo
 aws_region: &aws_region {{aws-region}}
-aws_s3_endpoint: &aws_s3_endpoint 'https://s3-us-west-1.amazonaws.com' # This varies per region: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+aws_s3_endpoint: &aws_s3_endpoint {{aws-s3-endpoint}} # This varies per region: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
 
 aws_route_53_access_key_id: &aws_route53_access_key_id {{aws-route53-access-key-id}}
 aws_route_53_secret_access_key: &aws_route53_secret_access_key {{aws-route53-secret-access-key}}
