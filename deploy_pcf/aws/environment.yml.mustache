@@ -118,6 +118,8 @@ ops_manager:
         password: {{smtp_password}}
       enable_starttls_auto: true
       smtp_auth_mechanism: plain
+    cloud_controller:
+      encrypt_key: c1oudc0w
     trust_self_signed_certificates: true
     ssl_certificate: *ssl_certificate
     ssl_private_key: *ssl_private_key
